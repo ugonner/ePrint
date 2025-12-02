@@ -1,0 +1,107 @@
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Each slide */
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+/* Paragraphs default positions */
+.top-text,
+.bottom-text {
+  position: relative;
+  opacity: 0;
+  background-color: transparent;
+}
+
+/* ---------- ANIMATIONS ---------- */
+
+/* When slide becomes active */
+.slide.active .top-text {
+  animation: slideDownBounce 4s forwards;
+}
+
+.slide.active .bottom-text {
+  animation: slideUpBounce 4s forwards;
+}
+
+/* Top text slides downward and bounces */
+@keyframes slideDownBounce {
+  0% {
+    top: -40px;
+    opacity: 0;
+  }
+  35% {
+    top: 35%;
+    opacity: 1;
+  }
+  50% {
+    top: 30%;
+    opacity: 1;
+  }
+  60% {
+    top: 35%;
+    opacity: 1;
+  }
+  70% {
+    top: 30%;
+    opacity: 1;
+  }
+  80% {
+    top: 35%;
+    opacity: 1;
+  }
+  90% {
+    top: 30%;
+    opacity: 1;
+  }
+  100% {
+    top: 35%;
+    opacity: 1;
+  }
+
+}
+
+/* Bottom text slides upward and bounces */
+@keyframes slideUpBounce {
+  0% {
+    bottom: -40px;
+    opacity: 0;
+  }
+  60% {
+    bottom: 35%;
+    opacity: 1;
+  }
+  70% {
+    bottom: 30%;
+    opacity: 1;
+  }
+  80% {
+    bottom: 35%;
+    opacity: 1;
+  }
+  90% {
+    bottom: 30%;
+    opacity: 1;
+  }
+  100% {
+    bottom: 35%;
+    opacity: 1;
+  }
+}

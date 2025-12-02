@@ -1,0 +1,35 @@
+import { IonContent, IonPage, IonRouterOutlet } from "@ionic/react";
+import { PropsWithChildren } from "react";
+import { Route } from "react-router";
+import { BookingRoutes } from "../enums/routes";
+import { BookAidServicePage } from "../pages/BookAidServicePage";
+import { InvoicePage } from "../pages/InvoicePage";
+import { BookingPage } from "../pages/BookingPage";
+import { BaseHeader } from "../../shared/components/partials/BaseHeader";
+import { AuthGuard } from "../../auth/guards/AuthGuard";
+import { LocationTrackerPage } from "../pages/LocationTrackerPage";
+import { UserBookingsPage } from "../pages/UsereBookingsPage";
+import { NavigationBarGap } from "../../shared/components/partials/NavigationBarGap";
+import { BaseMenu } from "../../shared/components/menus/BaseMenu";
+
+export const BookingLayout = () => {
+    return (
+       <AuthGuard>
+         <IonPage>
+            <BaseHeader title="Booking" />
+            <IonContent id="base-menu-content">
+            <IonRouterOutlet>
+                <Route path={BookingRoutes.BOOK_SERVICE} component={BookAidServicePage} />
+                <Route path={BookingRoutes.INVOICE} component={InvoicePage} />
+                <Route path={BookingRoutes.VIEW_BOOKING} component={BookingPage} />
+                <Route path={BookingRoutes.TRACK_LOCATION} component={LocationTrackerPage} />
+                <Route path={BookingRoutes.USER_BOOKINGS} component={UserBookingsPage} />
+            </IonRouterOutlet>
+             
+                {/* <NavigationBarGap /> */}
+            </IonContent>
+            
+        </IonPage>
+       </AuthGuard>
+    )
+}
