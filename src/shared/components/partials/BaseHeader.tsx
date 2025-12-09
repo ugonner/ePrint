@@ -42,6 +42,9 @@ export const BaseHeader = ({ title }: IHeaderProps) => {
           }}
         >
           <div>
+            {!isPlatform("desktop") && (
+              <span style={{ fontFamily: "cursive" }}>iDigiHub</span>
+            )}
             <SideMenu
               isOpen={openSideMenu}
               onClose={() => setOpenSideMenu(false)}
@@ -61,8 +64,8 @@ export const BaseHeader = ({ title }: IHeaderProps) => {
                       {item.label}
                     </span>
                   ))}
-                  
-            <span style={{ marginTop: 0 }}>{title}</span>
+
+                  <span style={{ marginTop: 0 }}>{title}</span>
                 </>
               ) : (
                 <IonIcon
@@ -75,33 +78,34 @@ export const BaseHeader = ({ title }: IHeaderProps) => {
               )}
             </span>
           </div>
-          <div>
+          <div></div>
+        </div>
+        {isPlatform("desktop") && (
+          <div
+            style={{
+              fontFamily: "cursive",
+              textAlign: "center",
+              backgroundColor: "black",
+              color: "white",
+              position: "absolute",
+              top: "0",
+              left: "10%",
+              width: "80px",
+              height: "100px",
+              zIndex: 1,
+              border: "5px solid black",
+            }}
+          >
+            <img
+              role="link"
+              onClick={() => router.push(HomeRoutes.HOME)}
+              style={{ width: "100%", maxHeight: "100%", borderRadius: "30%" }}
+              src="favicon.png"
+              alt="logo"
+            />
+            <span className="ion-text-bold">iDigiHub</span>
           </div>
-        </div>
-        <div
-          style={{
-            fontFamily: "cursive",
-            textAlign: "center",
-            backgroundColor: "black",
-            color: "white",
-            position: "absolute",
-            top: "0",
-            left: "10%",
-            width: "80px",
-            height: "100px",
-            zIndex: 1,
-            border: "5px solid black",
-          }}
-        >
-          <img
-            role="link"
-            onClick={() => router.push(HomeRoutes.HOME)}
-            style={{ width: "100%", maxHeight: "100%", borderRadius: "30%" }}
-            src="favicon.png"
-            alt="logo"
-          />
-          <span className="ion-text-bold">iDigiHub</span>
-        </div>
+        )}
       </div>
     </IonHeader>
   );

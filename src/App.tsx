@@ -65,6 +65,7 @@ import { SplashPage } from "./home/pages/SplashPage";
 import "./App.css";
 
 setupIonicReact();
+export const appVersionId = 1;
 const App: React.FC = () => {
 
   useEffect(() => {

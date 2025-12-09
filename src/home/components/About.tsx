@@ -16,7 +16,7 @@ export const About = () => {
             <IonCol size="12" sizeSm="7">
               <div>
                 <h4 className="ion-text-danger ion-text-bold ion-text-uppercase">
-                  What About ADDCR <IonIcon icon={helpSharp} />{" "}
+                  What About iDigiHub <IonIcon icon={helpSharp} />{" "}
                 </h4>
                 <p className="large-text">
                   African Diaspora Disability Collective Representative

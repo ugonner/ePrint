@@ -3,15 +3,15 @@ import { featureItems, IOnboardingItem } from "./launch-screens/Onboarding";
 
 export const longSectionItems = [
   {
-      image: "/images/sidebars/side-bar-2.webp",
+      image: "/images/banners/banner-ict-1.webp",
   
   },
   {
-    image: "/images/sidebars/side-bar-4.png",
+    image: "/images/banners/banner-ict-2.webp",
   
   },
   {
-     image: "/images/sidebars/side-bar-1.jpg",
+     image: "/images/banners/banner-ict-3.webp",
   
   }
 ];

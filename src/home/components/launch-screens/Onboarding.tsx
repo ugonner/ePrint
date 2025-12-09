@@ -56,7 +56,7 @@ const finalItem = onboardingItems[onboardingItems.length - 1];
         height: "100vh",
       }}
     >
-      <h1 style={{ fontWeight: "bolder" }}>Welcome To FlexMedCare&trade;</h1>
+      <h1 style={{ fontWeight: "bolder" }}>Welcome To iDigiHub;</h1>
       <div
         style={{
           display: "flex",
@@ -85,7 +85,7 @@ const finalItem = onboardingItems[onboardingItems.length - 1];
       </div>
       <div>
         <p>
-          By joining us, you agree to our Terms and Conditions at FlexMedCare
+          By joining us, you agree to our Terms and Conditions at iDigiHub
         </p>
       </div>
       <div
@@ -103,7 +103,7 @@ const finalItem = onboardingItems[onboardingItems.length - 1];
             justifyContent: "space-between",
           }}
         >
-          <div>
+          <div className="ion-margin-vertical">
             {onboardingItems[pageNumber - 1] && (
               <span role="button" onClick={() => setPageNumber(pageNumber - 1)}>
                 Back

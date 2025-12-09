@@ -6,7 +6,8 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonIcon,
-  useIonRouter
+  useIonRouter,
+  IonSpinner
 } from "@ionic/react";
 import {
   schoolSharp,
@@ -26,6 +27,7 @@ import { BookingRoutes } from "../../Booking/enums/routes";
 import { trainings } from "./TrainingTracks";
 import "./QuickActions.css";
 import { HomeRoutes } from "../enums/routes";
+import { seedServices } from "../../aid-service/datasets/aidservices";
 
 export interface IQuickActionButton {
   text: string;
@@ -48,11 +50,13 @@ const ServiceQuickActions = () => {
   const {aidServicesRef} = useIInitContextStore();
 
   
-const serviceHomeItems: IQuickActionButton[] = aidServicesRef.current.map((item, index) => ({
+const services = aidServicesRef.current?.length ? aidServicesRef.current : seedServices;
+const serviceHomeItems: IQuickActionButton[] = services.map((item, index) => ({
   text: item.name,
   routeLink: `${BookingRoutes.BOOK_SERVICE}?asi=${item.id}`,
   icon: serviceIcons[index] || sparklesOutline
 }));
+const cn = 
 
 serviceHomeItems.push({
   text: "Document Builder",
@@ -70,6 +74,18 @@ trainings.forEach((training) => {
 
   return (
     <>
+    <IonRow>
+      <IonCol size="12">
+        <h4 className="ion-text-uppercase ion-text-danger">
+          {
+            (!aidServicesRef.current?.length) && (
+              <IonSpinner />
+            )
+          }
+          book services
+        </h4>
+      </IonCol>
+    </IonRow>
      <IonRow>
           {serviceHomeItems.map((item, index) => (
             <IonCol size="6" key={index}>

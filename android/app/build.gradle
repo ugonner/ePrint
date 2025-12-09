@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "app.vercel.flexmedcare"
+    namespace "ng.com.idigihub"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "app.vercel.flexmedcare"
+        applicationId "ng.com.idigihub"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -11,7 +11,7 @@ export const PostLayout = () => {
     return (
          <AuthGuard>
               <IonPage>
-                <BaseHeader title="Health Education" />
+                <BaseHeader title="Digital Inclusion" />
                 <IonContent id="base-menu-content">
                   <BaseMenu />
                   <IonRouterOutlet>

@@ -1,7 +1,6 @@
 import { IonCol, IonContent, IonGrid, IonRow, isPlatform } from "@ionic/react";
 import Banner from "../components/Banner";
 import { MidSection } from "../components/MidSection";
-import { Team } from "../components/Team";
 import { ThematicAreas } from "../components/ThematicAreas";
 import { About } from "../components/About";
 import { Stats } from "../components/Stats";
@@ -17,6 +16,8 @@ import { Posts } from "../../post/datasets/posts";
 import { UserWelcome } from "../components/UserWelcome";
 import ServiceQuickActions from "../components/QuickActions";
 import { FAQs } from "../components/FAQs";
+import { Capacitor } from "@capacitor/core";
+import { DownloadApp } from "../components/DownloadAPP";
 
 export const HomePage = () => {
   const { aidServicesRef } = useIInitContextStore();
@@ -29,28 +30,7 @@ export const HomePage = () => {
   }, []);
   return (
     <IonContent>
-      {isPlatform("desktop") ? (
-        <>
-          <div
-            style={{
-              width: "100vw",
-              height: isPlatform("desktop") ? "400px" : "700px",
-            }}
-          >
-            <Banner />
-          </div>
-          <About />
-          <MidSection />
-          <ThematicAreas focalAreas={aidServicesRef.current} />
-          <RecentPosts posts={posts} />
-          <Stats />
-          <Partners />
-          <TrainingTracks />
-          <Donate />
-          <FAQs />
-          <BaseFooter />
-        </>
-      ) : (
+      {Capacitor.isNativePlatform() ? (
         <>
           <div
             style={{
@@ -63,7 +43,32 @@ export const HomePage = () => {
             <UserWelcome />
             <ServiceQuickActions />
             <FAQs />
+
+            <DownloadApp />
           </IonGrid>
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              width: "100vw",
+              height: isPlatform("desktop") ? "400px" : "700px",
+            }}
+          >
+            <Banner />
+          </div>
+
+          <About />
+          <DownloadApp />
+          <MidSection />
+          <ThematicAreas focalAreas={aidServicesRef.current} />
+          <RecentPosts posts={posts} />
+          <Stats />
+          <Partners />
+          <TrainingTracks />
+          <Donate />
+          <FAQs />
+          <BaseFooter />
         </>
       )}
     </IonContent>

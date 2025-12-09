@@ -1,6 +1,6 @@
 import React from "react";
 import "./SideMenu.css";
-import { briefcase, closeCircle, home, person } from "ionicons/icons";
+import { briefcase, closeCircle, home, logInOutline, logOutOutline, person } from "ionicons/icons";
 import { UserRoutes } from "../../../user/enums/routes.enum";
 import { HomeRoutes } from "../../../home/enums/routes";
 import { INavigationButton } from "./BaseMenu";
@@ -10,6 +10,7 @@ import { IAuthUserProfile } from "../../../user/interfaces/user";
 import { LocalStorageEnum } from "../../enums";
 import { IonIcon, IonItem, useIonRouter } from "@ionic/react";
 import { navItems } from "../partials/BaseFooter";
+import { AuthRoutes } from "../../../auth/enums/routes";
 
 export interface ISideMenuProps {
   isOpen: boolean;
@@ -62,6 +63,19 @@ export default function SideMenu({ isOpen, onClose }: ISideMenuProps) {
               {navButton.label}
             </li>
           ))}
+          <li
+              onClick={() => {
+                onClose();
+                 if(user?.userId) logOutUser();
+                 router.push(AuthRoutes.LOGIN);
+              }}
+            >
+              <IonIcon
+                icon={user?.userId ? logOutOutline : logInOutline}
+                className="ion-margin-horizontal"
+              ></IonIcon>{" "}
+              {user?.userId ? "log out": "log in"}
+            </li>
         </ul>
       </div>
     </>

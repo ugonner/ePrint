@@ -3,4 +3,6 @@ export interface IAppSettings {
     useMFA?: Boolean;
     hideHealthTip?: boolean;
     isOldUser?: boolean;
+    hideDownloadApp?: boolean;
+    currentAppVersion?: number;
 }

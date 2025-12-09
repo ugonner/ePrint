@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: "app.vercel.flexmedcare",
-  appName: 'Flex MedCare',
+  appId: "ng.com.idigihub",
+  appName: 'iDigiHub',
   webDir: 'dist',
   server: {
     allowNavigation: [

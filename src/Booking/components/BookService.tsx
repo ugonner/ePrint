@@ -21,9 +21,14 @@ import { IAidServiceProfile } from "../../aid-service/interfaces/aid-service-pro
 import {
   arrowBack,
   arrowForward,
+  calendarOutline,
+  callOutline,
   closeCircle,
+  compassOutline,
   compassSharp,
+  fileTrayOutline,
   folderOpenSharp,
+  informationOutline,
   personSharp,
   walkSharp,
 } from "ionicons/icons";
@@ -45,7 +50,13 @@ import { FileInput } from "../../file/components/FileInput";
 import { uploadFiles } from "../../file/utils/filehooks";
 import { BookingMediaFilesManager } from "./BookingMediaFilesManager";
 import { DeliveryType } from "../enums/booking";
+import { ViewFile } from "../../file/components/ViewFile";
 
+export interface ITabItem {
+  label: string;
+  id: number;
+  icon?: string;
+}
 export interface IBookServieProps {
   aidService: IAidService;
   booking?: IBooking;
@@ -54,8 +65,10 @@ export interface IBookServieProps {
 export const BookService = ({ aidService, booking }: IBookServieProps) => {
   const { setLoading, handleAsyncError } = useAsyncHelpersContext();
   const router = useIonRouter();
-  
-  const [bookingDto, setBookingDto] = useState<BookingDTO>({deliveryType: DeliveryType.DOOR_STEP} as BookingDTO);
+
+  const [bookingDto, setBookingDto] = useState<BookingDTO>({
+    deliveryType: DeliveryType.DOOR_STEP,
+  } as BookingDTO);
   const [locationAddress, setLocationAddress] = useState<ILocationAddress>(
     bookingDto.locationAddress || {}
   );
@@ -68,9 +81,30 @@ export const BookService = ({ aidService, booking }: IBookServieProps) => {
   const [openEditRawFileCopiesTab, setOpenEditRawFileCopiesTab] =
     useState(false);
 
-  const [currentRawFile, setCurrentRawFile] = useState<
-    (IFileAndObjectUrl & { copies: number }) | null
-  >(null);
+  const [tabNumber, setTabNumber] = useState<number>(0);
+  const tabItems: ITabItem[] = [
+    {
+      id: 0,
+      label: "Work Material",
+      icon: fileTrayOutline,
+    },
+    {
+      id: 1,
+      label: "Any Additional Info",
+      icon: informationOutline,
+    },
+    {
+      id: 2,
+      label: "Delivery Detail",
+      icon: compassOutline,
+    },
+    {
+      id: 4,
+      label: "Service and Contact Info",
+      icon: callOutline,
+    },
+  ];
+
   const selectedAidServiceRef = useRef<IAidService>(aidService);
 
   const createBooking = async () => {
@@ -87,12 +121,13 @@ export const BookService = ({ aidService, booking }: IBookServieProps) => {
       bookingDto.aidServiceId = selectedAidServiceRef.current.id;
       if (!bookingDto.startDate)
         throw new Error("Service date and time is required");
-      if(!(Object.values(DeliveryType).includes(bookingDto.deliveryType))) throw new Error("Please select a valid delivery type");
+      if (!Object.values(DeliveryType).includes(bookingDto.deliveryType))
+        throw new Error("Please select a valid delivery type");
 
       if (
         bookingDto.deliveryType === DeliveryType.DOOR_STEP &&
-        ((!locationAddress?.street?.trim()?.length ||
-          !locationAddress?.city?.trim()?.length))
+        (!locationAddress?.street?.trim()?.length ||
+          !locationAddress?.city?.trim()?.length)
       )
         throw new Error(
           "Based On Your Delivery type: Street and city are required"
@@ -148,72 +183,65 @@ export const BookService = ({ aidService, booking }: IBookServieProps) => {
     <div>
       <IonGrid>
         <IonRow>
-          <IonCol size="12" sizeSm="8">
-            <IonItem>
-              <IonSelect
-                label="Please select how you want your item delivered"
-                labelPlacement="stacked"
-                value={bookingDto.deliveryType}
-                onIonChange={(evt) => {
-                  setBookingDto({
-                    ...bookingDto,
-                    deliveryType: evt.detail.value as DeliveryType,
-                  });
-                }}
+          {tabItems.map((tab, index) => (
+            <IonCol
+              size="6"
+              key={index}
+              role="tab"
+              id={`${tab.label}-button`}
+              aria-controls={`${tab.label}`}
+              aria-selected={tabNumber === tab.id}
+            >
+              <IonButton
+                fill={tabNumber === tab.id ? "solid": "clear"}
+                onClick={() => setTabNumber(tab.id)}
+                expand="full"
               >
-                <IonSelectOption value={DeliveryType.DOOR_STEP}>
-                  {DeliveryType.DOOR_STEP} (Your location address is required)
-                </IonSelectOption>
-                <IonSelectOption value={DeliveryType.PICK_UP}>
-                  {DeliveryType.PICK_UP} (You will easily pick it up from our
-                  office)
-                </IonSelectOption>
-              </IonSelect>
-            </IonItem>
-          </IonCol>
+                <IonIcon icon={tab.icon} className="ion-margin-horizontal" />
+                {tab.label?.replace(" ", "")}
+              </IonButton>
+            </IonCol>
+          ))}
         </IonRow>
-        <BookingMediaFilesManager
-          onCompletion={(fileObjs) => {
-            setSelectedRawMediaFiles(fileObjs);
-          }}
-          label="Pick the documents you want us to process by snaping it, uploading from your device or you can make a voice note describing your work, then set number for copies and then, clikk Add File"
-        />
-        <IonRow>
-          <IonCol size="12">
-            <div>
-              <div>
-                <AidServiceSelector
-                  aidService={selectedAidServiceRef.current}
-                  onSelection={(aService: IAidService) => {
-                    selectedAidServiceRef.current = aService;
-                    setBookingDto({
-                      ...bookingDto,
-                      aidServiceId: aService.id,
-                    });
-                  }}
-                />
-              </div>
 
-              <div>
-                {bookingDto.deliveryType === DeliveryType.DOOR_STEP && (
-                  <LocationAddressManager
-                    locationAddress={locationAddress}
-                    setLocationAddress={setLocationAddress}
+        {tabNumber === 0 && (
+          <IonRow
+            role="tabpanel"
+            id={tabItems[0]?.label}
+            aria-labelledby={`${tabItems[0]?.label}-button`}
+          >
+            <IonCol size="12">
+              <IonGrid>
+                <>
+                  <BookingMediaFilesManager
+                    onCompletion={(fileObjs) => {
+                      setSelectedRawMediaFiles(fileObjs);
+                    }}
+                    label="Pick the documents you want us to process by snaping it, uploading from your device or you can make a voice note describing your work, then set number for copies and then, clikk Add File"
                   />
-                )}
-              </div>
-              <div>
-                <DateSelector
-                  label="Select the date and time for the service"
-                  initDate={new Date(bookingDto.startDate || Date.now())}
-                  onSelection={(seletedDate: Date) => {
-                    setBookingDto({
-                      ...bookingDto,
-                      startDate: seletedDate.toISOString(),
-                    });
+                </>
+              </IonGrid>
+            </IonCol>
+          </IonRow>
+        )}
+        {tabNumber === 1 && (
+          <IonRow
+            role="tabpanel"
+            aria-labelledby={`${tabItems[1]?.label}-button`}
+            id={tabItems[1]?.label}
+          >
+            <IonCol size="12">
+              {selectedDescriptionMediaFile && (
+                <ViewFile
+                  fileObj={{
+                    attachmentType: selectedDescriptionMediaFile.file?.type,
+                    attachmentUrl: selectedDescriptionMediaFile.objectUrl,
                   }}
+                  onDeletion={() => setSelectedDescriptionMediaFile(null)}
                 />
-              </div>
+              )}
+            </IonCol>
+            <IonCol size="12">
               <div>
                 <h3>Any Additional Information? </h3>
                 <p>
@@ -226,7 +254,7 @@ export const BookService = ({ aidService, booking }: IBookServieProps) => {
                   display: "flex",
                 }}
               >
-                <div style={{ width: "90%" }}>
+                <div style={{ minWidth: "70%" }}>
                   <TextAreaInput
                     onCompletion={(str) => {
                       setBookingDto({ ...bookingDto, bookingNote: str });
@@ -247,23 +275,124 @@ export const BookService = ({ aidService, booking }: IBookServieProps) => {
                     }}
                   />
                 </div>
-                <div className="ion-margin">
+              </div>
+            </IonCol>
+          </IonRow>
+        )}
+
+        {tabNumber === 2 && (
+          <IonRow
+            role="tabpanel"
+            id={`${tabItems[2]?.label}`}
+            aria-labelledby={`${tabItems[2]?.label}-button`}
+          >
+            <IonCol size="12">
+              <div>
+                <div>
                   <IonItem>
-                    <IonInput
-                      type="tel"
-                      label="Give us a contact phonenumber"
+                    <IonSelect
+                      label="Please select how you want your item delivered"
                       labelPlacement="stacked"
-                      value={bookingDto.contactPhoneNumber}
-                      onIonInput={(evt) => {
+                      value={bookingDto.deliveryType}
+                      onIonChange={(evt) => {
                         setBookingDto({
                           ...bookingDto,
-                          contactPhoneNumber: evt.detail.value as string,
+                          deliveryType: evt.detail.value as DeliveryType,
                         });
                       }}
-                    />
+                    >
+                      <IonSelectOption value={DeliveryType.DOOR_STEP}>
+                        {DeliveryType.DOOR_STEP} (Your location address is
+                        required)
+                      </IonSelectOption>
+                      <IonSelectOption value={DeliveryType.PICK_UP}>
+                        {DeliveryType.PICK_UP} (You will easily pick it up from
+                        our office)
+                      </IonSelectOption>
+                    </IonSelect>
                   </IonItem>
                 </div>
+
+                <div>
+                  {bookingDto.deliveryType === DeliveryType.DOOR_STEP && (
+                    <LocationAddressManager
+                      locationAddress={locationAddress}
+                      setLocationAddress={setLocationAddress}
+                    />
+                  )}
+                </div>
+                <div>
+                  <DateSelector
+                    label="Select the date and time for the service"
+                    initDate={new Date(bookingDto.startDate || Date.now())}
+                    onSelection={(seletedDate: Date) => {
+                      setBookingDto({
+                        ...bookingDto,
+                        startDate: seletedDate.toISOString(),
+                      });
+                    }}
+                  />
+                </div>
               </div>
+            </IonCol>
+          </IonRow>
+        )}
+        {tabNumber === 3 && (
+          <IonRow
+            role="tabpanel"
+            id={`${tabItems[3]?.label}`}
+            aria-labelledby={`${tabItems[3]?.label}-button`}
+          >
+            <IonCol size="12">
+              <div>
+                <AidServiceSelector
+                  aidService={selectedAidServiceRef.current}
+                  onSelection={(aService: IAidService) => {
+                    selectedAidServiceRef.current = aService;
+                    setBookingDto({
+                      ...bookingDto,
+                      aidServiceId: aService.id,
+                    });
+                  }}
+                />
+              </div>
+              <div className="ion-margin">
+                <IonItem>
+                  <IonInput
+                    type="tel"
+                    label="Give us a contact phonenumber"
+                    labelPlacement="stacked"
+                    value={bookingDto.contactPhoneNumber}
+                    onIonInput={(evt) => {
+                      setBookingDto({
+                        ...bookingDto,
+                        contactPhoneNumber: evt.detail.value as string,
+                      });
+                    }}
+                  />
+                </IonItem>
+              </div>
+            </IonCol>
+          </IonRow>
+        )}
+        <IonRow>
+          <IonCol size="4">
+            {tabItems[tabNumber - 1] && (
+              <IonItem
+                role="tab"
+                aria-controls={tabItems[tabNumber - 1]?.label}
+              >
+                <IonButton
+                  fill="clear"
+                  onClick={() => setTabNumber(tabNumber - 1)}
+                >
+                  Previous: <small>{tabItems[tabNumber - 1].label}</small>
+                </IonButton>
+              </IonItem>
+            )}
+          </IonCol>
+          <IonCol size="4">
+            {!tabItems[tabNumber + 1] && (
               <IonButton
                 aria-haspopup={true}
                 aria-expanded={openReviewOverlay}
@@ -272,7 +401,22 @@ export const BookService = ({ aidService, booking }: IBookServieProps) => {
               >
                 Review Booking
               </IonButton>
-            </div>
+            )}
+          </IonCol>
+          <IonCol size="4">
+            {tabItems[tabNumber + 1] && (
+              <IonItem
+                role="tab"
+                aria-controls={`${tabItems[tabNumber + 1]?.label}`}
+              >
+                <IonButton
+                  fill="clear"
+                  onClick={() => setTabNumber(tabNumber + 1)}
+                >
+                  Next <small>{tabItems[tabNumber + 1].label}</small>
+                </IonButton>
+              </IonItem>
+            )}
           </IonCol>
         </IonRow>
       </IonGrid>
@@ -330,7 +474,7 @@ export const BookService = ({ aidService, booking }: IBookServieProps) => {
                   } as unknown as IBooking
                 }
                 localRawFiles={selectedRawMediaFiles}
-                  />
+              />
             </div>
             <p>
               <IonButton expand="full" onClick={createBooking}>

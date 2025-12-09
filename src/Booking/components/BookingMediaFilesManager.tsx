@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { IFileAndObjectUrl } from "../../file/components/MultipleFiles";
 import { IonButton, IonCol, IonInput, IonItem, IonRow } from "@ionic/react";
 import { ViewFile } from "../../file/components/ViewFile";
@@ -22,6 +22,8 @@ export const BookingMediaFilesManager = ({
   const [currentRawFile, setCurrentRawFile] = useState<
     IFileAndObjectUrl & { copies: number }
   >();
+
+  const copiesInputRef = useRef<HTMLIonInputElement | null>(null);
 
   return (
     <>
@@ -63,6 +65,7 @@ export const BookingMediaFilesManager = ({
               />
               <IonItem>
                 <IonInput
+                ref={copiesInputRef}
                   type="number"
                   label="How many copies should be processed?"
                   labelPlacement="stacked"
@@ -101,6 +104,7 @@ export const BookingMediaFilesManager = ({
               onCompletion={(fileObj) => {
                 setCurrentRawFile({ ...fileObj, copies: 1 });
                 setOpenEditRawFileCopiesTab(true);
+                if(copiesInputRef.current) copiesInputRef.current.focus(); 
               }}
               label={label || "Pick the document you want processed"}
               communicationPreference={

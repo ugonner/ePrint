@@ -26,6 +26,7 @@ import { INavigationButton } from "../menus/BaseMenu";
 import { ContactCard } from "../../../home/pages/ContactPage";
 import { AidServiceRoutes } from "../../../aid-service/enums/routes";
 import { aboutText1 } from "../../../home/pages/AboutusPage";
+import { Capacitor } from "@capacitor/core";
 
   export const navItems: INavigationButton[] = [
     {
@@ -81,8 +82,11 @@ export const BaseFooter = () => {
   return (
     <>
     {
-      isPlatform("desktop") ? (
-         <footer id="base-footer" className="home-sections">
+      (Capacitor.isNativePlatform()) ? (
+       <div></div>
+
+      ): (
+          <footer id="base-footer" className="home-sections">
       <div>
         <IonGrid>
           <IonRow>
@@ -176,9 +180,6 @@ export const BaseFooter = () => {
         </IonGrid>
       </div>
     </footer>
-
-      ): (
-        <div></div>
       )
     }
     </> 

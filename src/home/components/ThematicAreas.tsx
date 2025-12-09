@@ -2,6 +2,7 @@ import { IonIcon, isPlatform, useIonRouter } from "@ionic/react";
 import { arrowForward, copyOutline } from "ionicons/icons";
 import { IAidService } from "../../aid-service/interfaces/aid-service.interface";
 import { AidServiceRoutes } from "../../aid-service/enums/routes";
+import { BookingRoutes } from "../../Booking/enums/routes";
 
 export interface IThematicAreaProps {
     focalAreas: IAidService[];
@@ -16,7 +17,7 @@ export const ThematicAreas = ({focalAreas}: IThematicAreaProps) => {
         <section id="thematic-areas" className="home-sections">
             <div
             style={{
-                backgroundImage: `url(/images/sidebars/side-bar-4.png)`,
+                backgroundImage: `url(/images/banners/banner-1.webp)`,
                 backgroundSize: "cover",
                 backgroundPosition: "fixed",
                 backgroundRepeat: "no-repeat",
@@ -29,7 +30,7 @@ export const ThematicAreas = ({focalAreas}: IThematicAreaProps) => {
                     maxWidth: `${isPlatform("desktop") ? "65%": "100%"}`
                 }}>
                     <div className="ion-margin ion-padding ion-text-center">
-                        <h2>Service Units</h2>
+                        <h2>Book Your Service</h2>
                         <p>These are areas we provide great expertise and push more strength for innovative developments</p>
                     </div>
                     <div
@@ -62,7 +63,7 @@ export const ThematicAreas = ({focalAreas}: IThematicAreaProps) => {
                                     className="ion-margin-horizontal"
                                     role="button"
                                     aria-label="view service unit's activities and updates"
-                                    onClick={() => router.push(`${AidServiceRoutes.AID_SERVICE_SINGLE}?asi=${focalArea.id}`)}
+                                    onClick={() => router.push(`${BookingRoutes.BOOK_SERVICE}?asi=${focalArea.id}`)}
                                     >
                                         <h3>{focalArea.name}</h3>
                                         <p>{focalArea.description?.substring(0, 120)}</p>

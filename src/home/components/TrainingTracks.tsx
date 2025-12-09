@@ -15,14 +15,14 @@ export const trainings: ITrainingProgram[] = [
     description:
       "This program builds the capacity of trainees on the ICT skills to be most productive, programs are planned to also cater for all persons and also the accessibility needs of person with disabilities",
     icon: walkSharp,
-    routeLink: "https://docs.google.com/forms/d/e/1FAIpQLSclhMtbZ4n_W2iRef7NkRZvxh7OfbotwM2hrFvY6mDpz2sfKw/viewform?usp=publish-editor",
+    routeLink: "https://docs.google.com/forms/d/e/1FAIpQLScfIfizRk5Eh9nN0MMfOYogVYLXuoviV8EEDvX_8HgXslzS1g/viewform?usp=publish-editor",
   },
   {
     name: "Digital Inclusion technologies training ",
     description:
       "This program provides capacity and professional consultancy of available and innovative ICT solutions and softwares for better inclusion and effeciency",
     icon: folderOpen,
-    routeLink: "https://docs.google.com/forms/d/e/1FAIpQLSclhMtbZ4n_W2iRef7NkRZvxh7OfbotwM2hrFvY6mDpz2sfKw/viewform?usp=publish-editor",
+    routeLink: "https://docs.google.com/forms/d/e/1FAIpQLScfIfizRk5Eh9nN0MMfOYogVYLXuoviV8EEDvX_8HgXslzS1g/viewform?usp=publish-editor",
   },
 ];
 

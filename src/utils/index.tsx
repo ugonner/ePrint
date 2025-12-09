@@ -101,7 +101,7 @@ export function formatCurrency(
 
 export interface IUseLocalStorage {
   getItem: <TItem>(key: LocalStorageEnum) => TItem | null;
-  setItem: (key: LocalStorageEnum, itemObj: unknown) => void;
+  setItem: <TItemType = unknown>(key: LocalStorageEnum, itemObj: TItemType) => void;
 }
 
 export const useLocalStorage = (): IUseLocalStorage => {
@@ -111,7 +111,7 @@ export const useLocalStorage = (): IUseLocalStorage => {
     return JSON.parse(itemString) as TItem;
   }
 
-  const setItem = (key: LocalStorageEnum, tObj: unknown) => {
+  const setItem = <TItemType = unknown>(key: LocalStorageEnum, tObj: TItemType) => {
     const tString = JSON.stringify(tObj);
     localStorage.setItem(key, tString);
   }
