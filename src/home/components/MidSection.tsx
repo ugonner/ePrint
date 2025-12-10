@@ -2,16 +2,18 @@ import { IonCol, IonGrid, IonImg, IonItem, IonRow, isPlatform } from "@ionic/rea
 import { featureItems, IOnboardingItem } from "./launch-screens/Onboarding";
 
 export const longSectionItems = [
-  {
-      image: "/images/banners/banner-ict-1.webp",
   
-  },
   {
     image: "/images/banners/banner-ict-2.webp",
   
   },
   {
-     image: "/images/banners/banner-ict-3.webp",
+      image: "/images/sidebars/sidebar-1.webp",
+  
+  },
+
+  {
+    image: "/images/banners/banner-ict-1.webp",
   
   }
 ];

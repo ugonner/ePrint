@@ -63,6 +63,8 @@ import { SplashScreen } from "@capacitor/splash-screen";
 import { SplashPage } from "./home/pages/SplashPage";
 
 import "./App.css";
+import AboutUsPage from "./home/pages/AboutusPage";
+import ContactPage from "./home/pages/ContactPage";
 
 setupIonicReact();
 export const appVersionId = 1;
@@ -99,6 +101,8 @@ const App: React.FC = () => {
                      <Route path={PaymetRoutes.TRANSACTIONS} component={TransactionsPage} />
                      <Route path={HomeRoutes.ONBOARDING} component={OnboardingPage} /> 
                      <Route path={HomeRoutes.SPLASH_PAGE} component={SplashPage} />
+                    <Route path={HomeRoutes.ABOUT_US} component={AboutUsPage} />
+                    <Route path={HomeRoutes.CONTACT_US} component={ContactPage} />
                     <Redirect to={HomeRoutes.SPLASH_PAGE} />
                   
                 </IonRouterOutlet>

@@ -11,6 +11,7 @@ import { useState } from "react";
 import SideMenu from "../menus/SideMenu";
 import { HomeRoutes } from "../../../home/enums/routes";
 import { navItems } from "./BaseFooter";
+import { BaseHeaderGap } from "./BaseHeaderGap";
 
 export interface IHeaderProps {
   title: string;
@@ -21,6 +22,8 @@ export const BaseHeader = ({ title }: IHeaderProps) => {
   const router = useIonRouter();
 
   return (
+    <>
+    
     <IonHeader>
       <div
         className="orgheader"
@@ -108,5 +111,7 @@ export const BaseHeader = ({ title }: IHeaderProps) => {
         )}
       </div>
     </IonHeader>
+    <BaseHeaderGap />
+    </>
   );
 };

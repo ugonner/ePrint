@@ -1,3 +1,42 @@
 html, body, ion-app, ion-content {
   background-color: var(--ion-background-color) !important;
 }
+
+
+.large-text {
+  font-size: 2em;
+  font-weight: bold;
+}
+.extra-large-text {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.extra-small-text {
+  font-size: xx-small;
+  font-weight: bold;
+}
+
+.small-text {
+  font-size: small;
+}
+
+.scale-in {
+  opacity: 1;
+  transition: opacity 4s ease;
+  animation: scaler 4s ease;
+}
+@keyframes scaler {
+  0% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(2);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}

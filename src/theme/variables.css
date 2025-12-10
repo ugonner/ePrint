@@ -7,7 +7,6 @@ http://ionicframework.com/docs/theming/ */
     --ion-text-color: #ffffff;
   }
 
-  ion-button,
   ion-label,
   a {
     color: #ffffff !important;

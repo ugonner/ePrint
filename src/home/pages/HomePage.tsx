@@ -32,13 +32,6 @@ export const HomePage = () => {
     <IonContent>
       {Capacitor.isNativePlatform() ? (
         <>
-          <div
-            style={{
-              height: "70px",
-            }}
-          >
-            &nbsp;
-          </div>
           <IonGrid>
             <UserWelcome />
             <ServiceQuickActions />
